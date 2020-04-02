@@ -15,18 +15,18 @@ export function* initTickets(params) {
             params.purchase.id = response.length + 1;
         }
 
-        // const addTicket = yield call(() => fetch('/tickets', {
-        //     method: "POST",
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded',
-        //     },
-        //     body: qs.stringify(params.purchase),
-        // })
-        // .then((res) => {
-        //     return res.json();
-        // }))
+        const addTicket = yield call(() => fetch('/tickets', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: qs.stringify(params.purchase),
+        })
+        .then((res) => {
+            return res.json();
+        }))
 
-        yield put(initTicketsAddSuccess());
+        yield put(initTicketsAddSuccess(addTicket));
     } catch (error) {
         console.log(error);
         yield put(initTicketsAddFailed());
