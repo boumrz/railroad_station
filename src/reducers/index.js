@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import authReducer from './authReducer';
 import app from './app';
 import tickets from './tickets';
@@ -12,5 +11,4 @@ export const rootReducer = combineReducers({
     tickets,
     trains,
     purchaseTicket,
-    form: formReducer,
 })

@@ -1,27 +1,33 @@
 import { initialState } from '../initialState';
 import { enumConstants } from '../../constants/actions';
 
-export default (state = initialState, action) => {
+export default (state = {
+    ...initialState,
+    isPurchaseTicket: false,
+}, action) => {
     switch(action.type) {
-        case enumConstants.TICKETS_FOUND_INIT: {
+        case enumConstants.TICKET_ADD_INIT: {
             return {
                 ...state,
                 isLoading: true,
                 isError: false,
+                isPurchaseTicket: false,
             }
         }
-        case enumConstants.TICKETS_FOUND_INIT_SUCCESS: {
+        case enumConstants.TICKET_ADD_INIT_SUCCESS: {
             return {
                 ...state,
                 isLoading: false,
                 isError: false,
+                isPurchaseTicket: true,
             }
         }
-        case enumConstants.TICKETS_FOUND_INIT_FAILED: {
+        case enumConstants.TICKET_ADD_INIT_FAILED: {
             return {
                 ...state,
                 isLoading: false,
                 isError: true,
+                isPurchaseTicket: false,
             }
         }
 

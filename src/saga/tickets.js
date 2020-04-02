@@ -1,17 +1,34 @@
 import { put, call } from 'redux-saga/effects';
-import { initTicketsFoundSuccess, initTicketsFoundFailed } from '../components/actions';
+import qs from 'querystring';
+import { initTicketsAddSuccess, initTicketsAddFailed } from '../components/actions/tickets';
 
-export function* initTickets() {
+export function* initTickets(params) {
     try {
         const response = yield call(() => fetch('/tickets', {
-            method: "GET"
+            method: "GET",
         })
         .then((res) => {
             return res.json();
         }))
 
-        yield put(initTicketsFoundSuccess(response));
+        if (response && response.length) {
+            params.purchase.id = response.length + 1;
+        }
+
+        // const addTicket = yield call(() => fetch('/tickets', {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded',
+        //     },
+        //     body: qs.stringify(params.purchase),
+        // })
+        // .then((res) => {
+        //     return res.json();
+        // }))
+
+        yield put(initTicketsAddSuccess());
     } catch (error) {
-        yield put(initTicketsFoundFailed());
+        console.log(error);
+        yield put(initTicketsAddFailed());
     }
 }

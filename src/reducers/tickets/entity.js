@@ -6,9 +6,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch(action.type) {
-        case enumConstants.TICKETS_FOUND_INIT_SUCCESS: {
+        case enumConstants.TICKETS_ADD_INIT_SUCCESS: {
             return {
-                tickets: action.tickets,
+                ...state,
             }
         }
         

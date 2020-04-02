@@ -9,6 +9,7 @@ import {
     FromTrain,
     ToTrain,
     RegisterTicketButton,
+    FormButtonRegisterTicket,
 } from './styles';
 
 export class PurchaseTicketView extends React.Component {
@@ -41,7 +42,11 @@ export class PurchaseTicketView extends React.Component {
                         </InfoTravel>
                         <RegisterTicketButton>
                             {isRegister ? renderRegisterTicket(): (
-                                <button onClick={handleClickRegister}>Оформить билет</button>
+                                <FormButtonRegisterTicket 
+                                    onClick={handleClickRegister}
+                                >
+                                    Начать оформление билета
+                                </FormButtonRegisterTicket>
                             )}
                         </RegisterTicketButton>
                     </ContentContainer>

@@ -47,3 +47,10 @@ export const FooterContainer = styled.div``;
 export const TestInput = styled.input`
     outline: none;
 `;
+
+export const FormButtonRegisterTicket = styled.button`
+    height: 30px;
+    margin: 15px;
+    border-radius: 10px;
+    outline: none;
+`;

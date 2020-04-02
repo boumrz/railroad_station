@@ -7,7 +7,7 @@ import { initTrains } from './trains';
 import { purchaseTicket } from './purchaseTicket';
 
 export function* main() {
-    // yield takeLatest(enumConstants.TICKETS_FOUND_INIT, initTickets);
+    yield takeLatest(enumConstants.TICKET_ADD_INIT, initTickets);
     yield takeLatest(enumConstants.TRAINS_FOUND_INIT, initTrains);
     yield takeLatest(enumConstants.TICKET_PURCHASE_INIT, purchaseTicket);
 }

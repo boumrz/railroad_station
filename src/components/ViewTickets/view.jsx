@@ -9,7 +9,7 @@ import {
 } from './styles';
 
 export class TicketsPopupView extends React.Component {
-    handleClickPurchaseTicket = (number, date, from, to) => {
+    handleClickPurchaseTicket = (number, date, from, to, time) => {
         const { history, purchaseTicket } = this.props;
 
         history.push('/purchase');
@@ -19,6 +19,7 @@ export class TicketsPopupView extends React.Component {
             train_departure_date: date,
             from_station: from,
             to_station: to,
+            train_departure_time: time,
         }));
 
         purchaseTicket(qs.stringify({
@@ -26,6 +27,7 @@ export class TicketsPopupView extends React.Component {
             train_departure_date: date,
             from_station: from,
             to_station: to,
+            train_departure_time: time,
         }));
     }
 
@@ -45,15 +47,25 @@ export class TicketsPopupView extends React.Component {
                 {Array.isArray(trains) && trains.map(({ 
                     train_number, 
                     train_departure_date, 
+                    train_departure_time,
                     from_station, 
-                    to_station 
+                    to_station,
+                    train_arrival_date,
+                    train_arrival_time,
+                    train_travel_time, 
+                    train_ticket_price,
                 }) => (
                     <TicketTrainContainer>
                         <TicketTrainBox onClick={() => this.handleClickPurchaseTicket(
                             train_number, 
                             train_departure_date,
                             from_station,
-                            to_station
+                            to_station,
+                            train_departure_time,
+                            train_arrival_date,
+                            train_arrival_time,
+                            train_travel_time,
+                            train_ticket_price,
                         )}>
                             <InfoTrainBox>{train_number}</InfoTrainBox>
                             <InfoTrainBox>{train_departure_date}</InfoTrainBox>
