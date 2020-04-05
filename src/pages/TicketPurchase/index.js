@@ -9,6 +9,7 @@ const mapStateToProps = (state) => {
         targetTicket: state.purchaseTicket.statePurchaseTicket.targetTicket,
         isLoading: state.tickets.stateTickets.isLoading,
         isError: state.tickets.stateTickets.isError,
+        isAuth: state.authReducer.isAuth,
         isPurchaseTicket: state.tickets.stateTickets.isPurchaseTicket,
     }
 }

@@ -1,40 +1,40 @@
-import { initialState } from '../initialState';
+import { initialState } from "../initialState";
 import { enumConstants } from '../../constants/actions';
 
 export default (state = {
     ...initialState,
+    currentUser: {},
 }, action) => {
     switch(action.type) {
-        case enumConstants.TICKET_ADD_INIT: {
+        case enumConstants.ADD_USER_INIT: {
             return {
                 ...state,
                 isLoading: true,
                 isError: false,
-                isPurchaseTicket: false,
             }
         }
-        case enumConstants.TICKET_PURCHASE_INIT: {
+        case enumConstants.ADD_USER_INIT_SUCCESS: {
 
-            return {
-                ...state,
-                isPurchaseTicket: false,
-            }
-        }
-
-        case enumConstants.TICKET_ADD_INIT_SUCCESS: {
             return {
                 ...state,
                 isLoading: false,
                 isError: false,
-                isPurchaseTicket: true,
+                currentUser: action.user,
             }
         }
-        case enumConstants.TICKET_ADD_INIT_FAILED: {
+        case enumConstants.ADD_USER_INIT_FAILED: {
             return {
                 ...state,
                 isLoading: false,
                 isError: true,
-                isPurchaseTicket: false,
+            }
+        }
+        case enumConstants.SWITCH_PAGE_REGISTRATION: {
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                currentUser: {},
             }
         }
 

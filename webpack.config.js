@@ -38,6 +38,7 @@ module.exports = {
             '/tickets': 'http://localhost:8000',
             '/trains': 'http://localhost:8000',
             '/purchase': 'http://localhost:8000',
+            '/users': 'http://localhost:8000',
         }
         
     },

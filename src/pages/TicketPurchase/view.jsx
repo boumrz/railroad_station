@@ -177,10 +177,13 @@ export class TicketPurchaseView extends React.Component {
     }
 
     render() {
-        const { isLoading, isError, isPurchaseTicket, history } = this.props;
-
-        if(isPurchaseTicket) {
+        const { isLoading, isError, isPurchaseTicket, history, isAuth } = this.props;
+        console.log('isAuth', isPurchaseTicket);
+        if(isPurchaseTicket && isAuth) {
             history.push('/office');
+        } 
+        if(isPurchaseTicket && !isAuth) {
+            history.push('/login');
         }
 
         return (

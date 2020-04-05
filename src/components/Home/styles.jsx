@@ -16,6 +16,7 @@ export const HeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    position: relative;
 `;
 
 export const ContentContainer = styled.div`
@@ -70,4 +71,28 @@ export const DivDescription = styled.div`
 
 export const SpanDesription = styled.div`
     text-align: center;
+`;
+
+export const BoxOffice = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+`;
+
+export const BoxSignOffice = styled.div`
+    color: #00FFFF;
+    font-family: Helvetica;
+    margin-top: 22px;
+    margin-bottom: 20px;
+    margin-right: 15px; 
+
+    &:Hover {
+        cursor: pointer;
+        color: rgba(0, 255, 255, 0.7);
+    }
 `;

@@ -30,6 +30,33 @@ module.exports = function(app, db) {
     //     });
     // });
 
+    app.get('/users', (req, res) => {
+        db.collection('users').find(req.query).toArray((err, items) => {
+            res.send(items);
+        });
+    });
+
+    app.post('/users', (req, res) => {
+        const user = {
+            id: req.body.id,
+            firstname: req.body.firstname,
+            surname: req.body.surname,
+            midname: req.body.midname,
+            dateBirth: req.body.dateBirth,
+            login: req.body.login,
+            password: req.body.password,
+            sex: req.body.sex,
+        }
+
+        db.collection('users').insertOne(user, (err, result) => {
+            if (err) { 
+                res.send({ 'error': 'An error has occurred' }); 
+            } else {
+                res.send(result.ops[0]);
+            }
+        });
+    });
+
     app.get('/trains', (req, res) => {
         db.collection('trains').find(req.query).toArray((err, items) => {
             res.send(items);
