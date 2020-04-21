@@ -7,29 +7,6 @@ module.exports = function(app, db) {
         });
     });
 
-    // app.get('/purchase', (req, res) => {
-    //     db.collection('purchaseTicket').find(req.query).toArray((err, items) => {
-    //         res.send(items);
-    //     });
-    // });
-
-    // app.post('/purchase', (req, res) => {
-    //     const note = {  
-    //         number: req.body.number,
-    //         date: req.body.date,
-    //         from: req.body.from,
-    //         to: req.body.to,
-    //     };
-
-    //     db.collection('purchaseTicket').insertOne(note, (err, result) => {
-    //         if (err) { 
-    //             res.send({ 'error': 'An error has occurred' }); 
-    //         } else {
-    //             res.send(result.ops[0]);
-    //         }
-    //     });
-    // });
-
     app.get('/users', (req, res) => {
         db.collection('users').find(req.query).toArray((err, items) => {
             res.send(items);

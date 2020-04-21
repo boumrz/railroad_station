@@ -41,9 +41,7 @@ export class HomeView extends React.Component {
     }
 
     render() {
-        const { trains, isAuth } = this.props;
-
-        console.log('isAuth', isAuth);
+        const { isAuth } = this.props;
 
         return (
             <MainContainer>

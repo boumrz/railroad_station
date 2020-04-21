@@ -36,6 +36,8 @@ export class LoginView extends React.Component {
     handleClickLogin = () => {
         const { checkUser } = this.props;
 
+        localStorage.setItem('MY_LOGIN', this.state.login);
+
         checkUser(this.state);
     }
 

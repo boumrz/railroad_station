@@ -1,5 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
+import moment from 'moment';
+import { checkUser } from '../../utils/checkUser';
 import {
     MainContainer,
     ContentContainer,
@@ -13,6 +15,26 @@ import {
     ScheduledTripsButton,
     PastTripsButton,
     TripsInfoPopup,
+    InfoTickets,
+    DateTickets,
+    AppointmentTickets,
+    AmountTickets,
+    DateDeparture,
+    DateArrival,
+    Date,
+    Time,
+    Text,
+    FromStation,
+    ToStation,
+    FromBox,
+    ToBox,
+    CarBox,
+    TrainNumber,
+    CarNumber,
+    PlaceNumber,
+    TextMain,
+    TicketPrice,
+    TypeCar,
 } from './styles';
 
 export class PrivateOfficeView extends React.Component {
@@ -53,12 +75,14 @@ export class PrivateOfficeView extends React.Component {
 
     handleClickToHome = () => {
         const { history } = this.props;
-        
+
         history.push('/');
     }
 
     componentDidMount = () => {
-        const { isAuthAction, isAuth } = this.props;
+        const { isAuthAction, isAuth, compareUsersTickets } = this.props;
+
+        compareUsersTickets();
 
         if (localStorage.getItem('IS_AUTH') === 'true') {
             isAuthAction();
@@ -67,7 +91,48 @@ export class PrivateOfficeView extends React.Component {
 
     render() {
         const { isActivePast, isActiveScheduled } = this.state;
-        const { isAuth } = this.props;
+        const { isAuth, responseUsers, responseTickets } = this.props;
+
+        let currentTickets = [];
+        let currentUser = {};
+
+        let scheduledTickets = [];
+        let pastTickets = [];
+
+        Array.isArray(responseUsers) && responseUsers.map((item) => {
+            if (item.login === localStorage.getItem('MY_LOGIN')) {
+                currentUser = item;
+            }
+        });
+
+        let j = 0;
+        if (responseTickets) {
+            for (let i = 0; i < responseTickets.length; i++) {
+                if (responseTickets[i].firstname === currentUser.firstname && 
+                    responseTickets[i].surname === currentUser.surname &&
+                    responseTickets[i].patronymic === currentUser.midname) {
+
+                    currentTickets[j] = responseTickets[i];
+                    j += 1;
+                }
+            }
+        }
+
+        let pastTicket = 0;
+        Array.isArray(currentTickets) && currentTickets.map((item) => {
+            if (moment(item.departureDatePassenger).format("DD-MM-YYYY") < moment().format("DD-MM-YYYY")) {
+                pastTickets[pastTicket] = item;
+                pastTicket += 1;
+            }
+        });
+
+        let scheduledTicket = 0;
+        Array.isArray(currentTickets) && currentTickets.map((item) => {
+            if (moment(item.departureDatePassenger).format("DD-MM-YYYY") >= moment().format("DD-MM-YYYY")) {
+                scheduledTickets[scheduledTicket] = item;
+                scheduledTicket += 1;
+            }
+        });
 
         if (!isAuth) return <Redirect to="/login" />;
 
@@ -95,7 +160,124 @@ export class PrivateOfficeView extends React.Component {
                             </PastTripsButton>
                         </TripsOptionMenu>
                         <TripsInfoPopup>
-
+                            {(isActiveScheduled && (
+                                Array.isArray(scheduledTickets) && scheduledTickets.map(({
+                                    trainNumber,
+                                    carNumber,
+                                    placeNumber,
+                                    stationLandingPassenger,
+                                    endStationPassenger,
+                                    departureDatePassenger,
+                                    departureTimePassenger,
+                                    arrivalTimePassenger,
+                                    typeOfCar,
+                                    ticketPrice,
+                                }) => (
+                                    <InfoTickets>
+                                        <DateTickets>
+                                            <DateDeparture>
+                                                <TextMain>Дата и время отправления:</TextMain>
+                                                <Date>{moment(departureDatePassenger).format("DD-MM-YYYY")}</Date>
+                                                <Time>{departureTimePassenger}</Time>
+                                            </DateDeparture>
+                                            <DateArrival>
+                                                <TextMain>Время прибытия:</TextMain>
+                                                <Time>{arrivalTimePassenger}</Time>
+                                            </DateArrival>
+                                        </DateTickets>
+                                        <AppointmentTickets>
+                                            <FromBox>
+                                                <TextMain>Откуда:</TextMain>
+                                                <FromStation>{stationLandingPassenger}</FromStation>
+                                            </FromBox>
+                                            <CarBox>
+                                                <TrainNumber>
+                                                    <Text>Номер поезда: </Text>{trainNumber}
+                                                </TrainNumber>
+                                                <CarNumber>
+                                                    <Text>Номер вагона: </Text>{carNumber}
+                                                </CarNumber>
+                                                <PlaceNumber>
+                                                    <Text>Номер места: </Text>{placeNumber}
+                                                </PlaceNumber>
+                                            </CarBox>
+                                            <ToBox>
+                                                <TextMain>Куда:</TextMain>
+                                                <ToStation>{endStationPassenger}</ToStation>
+                                            </ToBox>
+                                        </AppointmentTickets>
+                                        <AmountTickets>
+                                            <TicketPrice>
+                                                <TextMain>Цена билета</TextMain>
+                                                {ticketPrice}
+                                            </TicketPrice>
+                                            <TypeCar>
+                                                <TextMain>Тип вагона</TextMain>
+                                                {typeOfCar}
+                                            </TypeCar>
+                                        </AmountTickets>
+                                    </InfoTickets>
+                                ))
+                            ))}
+                            {(isActivePast && (
+                                Array.isArray(pastTickets) && pastTickets.map(({
+                                    trainNumber,
+                                    carNumber,
+                                    placeNumber,
+                                    stationLandingPassenger,
+                                    endStationPassenger,
+                                    departureDatePassenger,
+                                    departureTimePassenger,
+                                    arrivalTimePassenger,
+                                    typeOfCar,
+                                    ticketPrice,
+                                }) => (
+                                    <InfoTickets>
+                                        <DateTickets>
+                                            <DateDeparture>
+                                                <TextMain>Дата и время отправления:</TextMain>
+                                                <Date>{moment(departureDatePassenger).format("DD-MM-YYYY")}</Date>
+                                                <Time>{departureTimePassenger}</Time>
+                                            </DateDeparture>
+                                            <DateArrival>
+                                                <TextMain>Время прибытия:</TextMain>
+                                                <Time>{arrivalTimePassenger}</Time>
+                                            </DateArrival>
+                                        </DateTickets>
+                                        <AppointmentTickets>
+                                            <FromBox>
+                                                <TextMain>Откуда:</TextMain>
+                                                <FromStation>{stationLandingPassenger}</FromStation>
+                                            </FromBox>
+                                            <CarBox>
+                                                <TrainNumber>
+                                                    <Text>Номер поезда: </Text>{trainNumber}
+                                                </TrainNumber>
+                                                <CarNumber>
+                                                    <Text>Номер вагона: </Text>{carNumber}
+                                                </CarNumber>
+                                                <PlaceNumber>
+                                                    <Text>Номер места: </Text>{placeNumber}
+                                                </PlaceNumber>
+                                            </CarBox>
+                                            <ToBox>
+                                                <TextMain>Куда:</TextMain>
+                                                <ToStation>{endStationPassenger}</ToStation>
+                                            </ToBox>
+                                        </AppointmentTickets>
+                                        <AmountTickets>
+                                            <TicketPrice>
+                                                <TextMain>Цена билета</TextMain>
+                                                {ticketPrice}
+                                            </TicketPrice>
+                                            <TypeCar>
+                                                <TextMain>Тип вагона</TextMain>
+                                                {typeOfCar}
+                                            </TypeCar>
+                                        </AmountTickets>
+                                    </InfoTickets>
+                                ))
+                            ))}
                         </TripsInfoPopup>
                     </BodyContainer>
                 </ContentContainer>

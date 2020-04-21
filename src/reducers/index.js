@@ -6,6 +6,7 @@ import trains from './trains';
 import purchaseTicket from './purchaseTicket';
 import users from './users';
 import login from './login';
+import checkUserOffice from './checkUserOffice';
 
 export const rootReducer = combineReducers({
     authReducer,
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
     purchaseTicket,
     users,
     login,
+    checkUserOffice,
 })

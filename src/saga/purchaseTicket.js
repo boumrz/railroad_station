@@ -1,5 +1,4 @@
 import { put, call } from 'redux-saga/effects';
-import qs from 'querystring';
 import { ticketPurchaseInitSuccess, ticketPurchaseInitFailed } from '../components/actions/purchaseTicket';
 
 export function* purchaseTicket(params) {
